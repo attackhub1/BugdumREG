@@ -1,19 +1,59 @@
 # ============================================================
-# BANGDAM SHOP | SAFE REG LOADER
-# Windows PowerShell 5.1 Compatible
+# BANGDAM SHOP | BUNGDUM x RUNIN
+# Windows PowerShell 5.1
 # ============================================================
 
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $OutputEncoding = [System.Text.Encoding]::UTF8
 
-$Host.UI.RawUI.WindowTitle = "BangDam Shop | REG Loader"
+$Host.UI.RawUI.WindowTitle = "BangDam Shop | BUNGDUM x RUNIN"
 
 Clear-Host
+
+# ============================================================
+# KEY SYSTEM
+# ============================================================
+
+$validKey = "BUNGDUMxRUNIN-8ee9a3s"
+
+Write-Host ""
+Write-Host "==================================================" -ForegroundColor DarkGray
+Write-Host "                 BANGDAM SHOP" -ForegroundColor White
+Write-Host "==================================================" -ForegroundColor DarkGray
+Write-Host ""
+Write-Host "              BUNGDUM x RUNIN" -ForegroundColor White
+Write-Host ""
+Write-Host "[KEY] Please enter your license key" -ForegroundColor Gray
+Write-Host ""
+
+$key = Read-Host "KEY"
+
+if ($key -ne $validKey) {
+
+    Write-Host ""
+    Write-Host "[ERROR] Invalid Key" -ForegroundColor Red
+    Write-Host "[INFO] Access denied" -ForegroundColor Yellow
+    Write-Host ""
+
+    Start-Sleep -Seconds 2
+    exit
+}
+
+Write-Host ""
+Write-Host "[OK] Key accepted" -ForegroundColor White
+Write-Host "[OK] Access granted" -ForegroundColor White
+Write-Host ""
+
+Start-Sleep -Milliseconds 700
+
+# ============================================================
+# STATUS FUNCTION
+# ============================================================
 
 function Show-Status {
     param(
         [string]$Text,
-        [int]$Delay = 15
+        [int]$Delay = 12
     )
 
     Write-Host $Text -ForegroundColor White
@@ -21,7 +61,7 @@ function Show-Status {
 }
 
 # ============================================================
-# 200 STATUS MESSAGES
+# 200 BANGDAM SHOP MESSAGES
 # ============================================================
 
 $messages = @(
@@ -205,7 +245,7 @@ foreach ($msg in $messages) {
 
 Write-Host ""
 Write-Host "==================================================" -ForegroundColor DarkGray
-Write-Host "              BANGDAM SHOP" -ForegroundColor White
+Write-Host "                 BANGDAM SHOP" -ForegroundColor White
 Write-Host "==================================================" -ForegroundColor DarkGray
 Write-Host ""
 Write-Host "[1] BlueStacks" -ForegroundColor White
@@ -262,14 +302,14 @@ $tempReg = Join-Path $env:TEMP "BangDamShop_Config.reg"
 Write-Host ""
 Write-Host "[REG] Creating temporary configuration..." -ForegroundColor White
 
-# UTF-16 LE is reliably readable by regedit
 [System.IO.File]::WriteAllText(
     $tempReg,
     $regContent,
     [System.Text.Encoding]::Unicode
 )
 
-if (-not (Test-Path $tempReg)) {
+if (-not (Test-Path -LiteralPath $tempReg)) {
+
     Write-Host "[ERROR] Could not create REG file" -ForegroundColor Red
     Read-Host "Press Enter to exit"
     exit
@@ -290,9 +330,12 @@ $regProcess = Start-Process `
     -PassThru
 
 if ($regProcess.ExitCode -eq 0) {
+
     Write-Host "[OK] Registry import completed" -ForegroundColor White
+
 }
 else {
+
     Write-Host "[WARNING] RegEdit returned code $($regProcess.ExitCode)" -ForegroundColor Yellow
 }
 
@@ -302,14 +345,21 @@ else {
 
 Start-Sleep -Milliseconds 300
 
-if (Test-Path $tempReg) {
-    Remove-Item -LiteralPath $tempReg -Force -ErrorAction SilentlyContinue
+if (Test-Path -LiteralPath $tempReg) {
+
+    Remove-Item `
+        -LiteralPath $tempReg `
+        -Force `
+        -ErrorAction SilentlyContinue
 }
 
-if (-not (Test-Path $tempReg)) {
+if (-not (Test-Path -LiteralPath $tempReg)) {
+
     Write-Host "[OK] Temporary REG deleted" -ForegroundColor White
+
 }
 else {
+
     Write-Host "[WARNING] Temporary REG could not be deleted" -ForegroundColor Yellow
 }
 
@@ -332,7 +382,7 @@ $msiPaths = @(
 )
 
 # ============================================================
-# FIND SELECTED EMULATOR
+# FIND EMULATOR
 # ============================================================
 
 if ($choice -eq "1") {
@@ -342,7 +392,9 @@ if ($choice -eq "1") {
     Write-Host "[SCAN] Searching for HD-Player.exe..." -ForegroundColor White
 
     $player = $blueStacksPaths |
-        Where-Object { Test-Path -LiteralPath $_ } |
+        Where-Object {
+            Test-Path -LiteralPath $_
+        } |
         Select-Object -First 1
 }
 else {
@@ -352,7 +404,9 @@ else {
     Write-Host "[SCAN] Searching for HD-Player.exe..." -ForegroundColor White
 
     $player = $msiPaths |
-        Where-Object { Test-Path -LiteralPath $_ } |
+        Where-Object {
+            Test-Path -LiteralPath $_
+        } |
         Select-Object -First 1
 }
 
