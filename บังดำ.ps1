@@ -1,14 +1,43 @@
-# ============================================================
-# BANGDAM SHOP | BUNGDUM x RUNIN
-# Windows PowerShell 5.1
-# ============================================================
-
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $OutputEncoding = [System.Text.Encoding]::UTF8
 
-$Host.UI.RawUI.WindowTitle = "BangDam Shop | BUNGDUM x RUNIN"
+$Host.UI.RawUI.WindowTitle = "BUNGDUM x RUNIN | BangDam Shop"
 
 Clear-Host
+
+# ============================================================
+# BIG RAINBOW LOGO
+# ============================================================
+
+$logo = @(
+"██████╗  █████╗ ███╗   ██╗ ██████╗ ██████╗  █████╗ ███╗   ███╗",
+"██╔══██╗██╔══██╗████╗  ██║██╔════╝ ██╔══██╗██╔══██╗████╗ ████║",
+"██████╔╝███████║██╔██╗ ██║██║  ███╗██║  ██║███████║██╔████╔██║",
+"██╔══██╗██╔══██║██║╚██╗██║██║   ██║██║  ██║██╔══██║██║╚██╔╝██║",
+"██████╔╝██║  ██║██║ ╚████║╚██████╔╝██████╔╝██║  ██║██║ ╚═╝ ██║",
+"╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝"
+)
+
+$logoColors = @(
+    "Red",
+    "Yellow",
+    "Green",
+    "Cyan",
+    "Blue",
+    "Magenta"
+)
+
+Write-Host ""
+
+for ($i = 0; $i -lt $logo.Count; $i++) {
+    Write-Host $logo[$i] -ForegroundColor $logoColors[$i]
+}
+
+Write-Host ""
+Write-Host "============================================================" -ForegroundColor Cyan
+Write-Host "                    BUNGDUM x RUNIN" -ForegroundColor Magenta
+Write-Host "============================================================" -ForegroundColor Blue
+Write-Host ""
 
 # ============================================================
 # KEY SYSTEM
@@ -16,14 +45,8 @@ Clear-Host
 
 $validKey = "BUNGDUMxRUNIN-8ee9a3s"
 
-Write-Host ""
-Write-Host "==================================================" -ForegroundColor DarkGray
-Write-Host "                 BANGDAM SHOP" -ForegroundColor White
-Write-Host "==================================================" -ForegroundColor DarkGray
-Write-Host ""
-Write-Host "              BUNGDUM x RUNIN" -ForegroundColor White
-Write-Host ""
-Write-Host "[KEY] Please enter your license key" -ForegroundColor Gray
+Write-Host "[KEY SYSTEM]" -ForegroundColor Cyan
+Write-Host "[INFO] Enter your license key" -ForegroundColor White
 Write-Host ""
 
 $key = Read-Host "KEY"
@@ -31,8 +54,10 @@ $key = Read-Host "KEY"
 if ($key -ne $validKey) {
 
     Write-Host ""
-    Write-Host "[ERROR] Invalid Key" -ForegroundColor Red
-    Write-Host "[INFO] Access denied" -ForegroundColor Yellow
+    Write-Host "==================================================" -ForegroundColor Red
+    Write-Host "[ERROR] INVALID KEY" -ForegroundColor Red
+    Write-Host "[INFO] ACCESS DENIED" -ForegroundColor Yellow
+    Write-Host "==================================================" -ForegroundColor Red
     Write-Host ""
 
     Start-Sleep -Seconds 2
@@ -40,15 +65,26 @@ if ($key -ne $validKey) {
 }
 
 Write-Host ""
-Write-Host "[OK] Key accepted" -ForegroundColor White
-Write-Host "[OK] Access granted" -ForegroundColor White
+Write-Host "[OK] KEY ACCEPTED" -ForegroundColor Green
+Write-Host "[OK] ACCESS GRANTED" -ForegroundColor Green
 Write-Host ""
 
 Start-Sleep -Milliseconds 700
 
 # ============================================================
-# STATUS FUNCTION
+# RAINBOW STATUS
 # ============================================================
+
+$rainbow = @(
+    "Red",
+    "Yellow",
+    "Green",
+    "Cyan",
+    "Blue",
+    "Magenta"
+)
+
+$rainbowIndex = 0
 
 function Show-Status {
     param(
@@ -56,12 +92,21 @@ function Show-Status {
         [int]$Delay = 12
     )
 
-    Write-Host $Text -ForegroundColor White
+    $color = $script:rainbow[$script:rainbowIndex]
+
+    Write-Host $Text -ForegroundColor $color
+
+    $script:rainbowIndex++
+
+    if ($script:rainbowIndex -ge $script:rainbow.Count) {
+        $script:rainbowIndex = 0
+    }
+
     Start-Sleep -Milliseconds $Delay
 }
 
 # ============================================================
-# 200 BANGDAM SHOP MESSAGES
+# 200 STATUS MESSAGES
 # ============================================================
 
 $messages = @(
@@ -232,7 +277,7 @@ $messages = @(
 "[BangDam Shop] DONE",
 "[BangDam Shop] READY",
 "[BangDam Shop] COMPLETE",
-"[BangDam Shop] EXITING LOADER"
+"[BangDam Shop] FINALIZING"
 )
 
 foreach ($msg in $messages) {
@@ -244,12 +289,12 @@ foreach ($msg in $messages) {
 # ============================================================
 
 Write-Host ""
-Write-Host "==================================================" -ForegroundColor DarkGray
-Write-Host "                 BANGDAM SHOP" -ForegroundColor White
-Write-Host "==================================================" -ForegroundColor DarkGray
+Write-Host "==================================================" -ForegroundColor Cyan
+Write-Host "              SELECT YOUR EMULATOR" -ForegroundColor Magenta
+Write-Host "==================================================" -ForegroundColor Blue
 Write-Host ""
-Write-Host "[1] BlueStacks" -ForegroundColor White
-Write-Host "[2] BlueStacks MSI" -ForegroundColor White
+Write-Host "[1] BlueStacks" -ForegroundColor Green
+Write-Host "[2] BlueStacks MSI" -ForegroundColor Cyan
 Write-Host ""
 
 $choice = ""
@@ -300,7 +345,7 @@ Windows Registry Editor Version 5.00
 $tempReg = Join-Path $env:TEMP "BangDamShop_Config.reg"
 
 Write-Host ""
-Write-Host "[REG] Creating temporary configuration..." -ForegroundColor White
+Write-Host "[REG] Creating temporary configuration..." -ForegroundColor Cyan
 
 [System.IO.File]::WriteAllText(
     $tempReg,
@@ -315,13 +360,13 @@ if (-not (Test-Path -LiteralPath $tempReg)) {
     exit
 }
 
-Write-Host "[OK] Temporary REG created" -ForegroundColor White
+Write-Host "[OK] Temporary REG created" -ForegroundColor Green
 
 # ============================================================
 # IMPORT REG
 # ============================================================
 
-Write-Host "[REG] Importing configuration..." -ForegroundColor White
+Write-Host "[REG] Importing configuration..." -ForegroundColor Cyan
 
 $regProcess = Start-Process `
     -FilePath "$env:WINDIR\regedit.exe" `
@@ -330,12 +375,9 @@ $regProcess = Start-Process `
     -PassThru
 
 if ($regProcess.ExitCode -eq 0) {
-
-    Write-Host "[OK] Registry import completed" -ForegroundColor White
-
+    Write-Host "[OK] Registry import completed" -ForegroundColor Green
 }
 else {
-
     Write-Host "[WARNING] RegEdit returned code $($regProcess.ExitCode)" -ForegroundColor Yellow
 }
 
@@ -346,7 +388,6 @@ else {
 Start-Sleep -Milliseconds 300
 
 if (Test-Path -LiteralPath $tempReg) {
-
     Remove-Item `
         -LiteralPath $tempReg `
         -Force `
@@ -354,12 +395,9 @@ if (Test-Path -LiteralPath $tempReg) {
 }
 
 if (-not (Test-Path -LiteralPath $tempReg)) {
-
-    Write-Host "[OK] Temporary REG deleted" -ForegroundColor White
-
+    Write-Host "[OK] Temporary REG deleted" -ForegroundColor Green
 }
 else {
-
     Write-Host "[WARNING] Temporary REG could not be deleted" -ForegroundColor Yellow
 }
 
@@ -388,8 +426,8 @@ $msiPaths = @(
 if ($choice -eq "1") {
 
     Write-Host ""
-    Write-Host "[1] BlueStacks selected" -ForegroundColor White
-    Write-Host "[SCAN] Searching for HD-Player.exe..." -ForegroundColor White
+    Write-Host "[1] BlueStacks selected" -ForegroundColor Green
+    Write-Host "[SCAN] Searching for HD-Player.exe..." -ForegroundColor Cyan
 
     $player = $blueStacksPaths |
         Where-Object {
@@ -400,8 +438,8 @@ if ($choice -eq "1") {
 else {
 
     Write-Host ""
-    Write-Host "[2] BlueStacks MSI selected" -ForegroundColor White
-    Write-Host "[SCAN] Searching for HD-Player.exe..." -ForegroundColor White
+    Write-Host "[2] BlueStacks MSI selected" -ForegroundColor Cyan
+    Write-Host "[SCAN] Searching for HD-Player.exe..." -ForegroundColor Cyan
 
     $player = $msiPaths |
         Where-Object {
@@ -418,29 +456,30 @@ Write-Host ""
 
 if ($player) {
 
-    Write-Host "==================================================" -ForegroundColor DarkGray
-    Write-Host "[OK] Emulator found" -ForegroundColor White
-    Write-Host "[PATH] $player" -ForegroundColor Gray
-    Write-Host "[LAUNCH] Starting emulator..." -ForegroundColor White
-    Write-Host "==================================================" -ForegroundColor DarkGray
+    Write-Host "==================================================" -ForegroundColor Green
+    Write-Host "[OK] Emulator found" -ForegroundColor Green
+    Write-Host "[PATH] $player" -ForegroundColor Cyan
+    Write-Host "[LAUNCH] Starting emulator..." -ForegroundColor Magenta
+    Write-Host "==================================================" -ForegroundColor Green
     Write-Host ""
 
     Start-Process -FilePath $player
 
-    Write-Host "[DONE] Emulator launched" -ForegroundColor White
-    Write-Host "[DONE] BangDam Shop finished" -ForegroundColor White
+    Write-Host "[DONE] Emulator launched" -ForegroundColor Green
+    Write-Host "[DONE] BangDam Shop finished" -ForegroundColor Cyan
 
 }
 else {
 
-    Write-Host "==================================================" -ForegroundColor DarkGray
+    Write-Host "==================================================" -ForegroundColor Red
     Write-Host "[ERROR] Emulator not found" -ForegroundColor Red
     Write-Host "[INFO] Check your BlueStacks installation path" -ForegroundColor Yellow
-    Write-Host "==================================================" -ForegroundColor DarkGray
+    Write-Host "==================================================" -ForegroundColor Red
 }
 
 Write-Host ""
-Write-Host "BangDam Shop | Loader finished" -ForegroundColor White
+Write-Host "BUNGDUM x RUNIN | BangDam Shop" -ForegroundColor Magenta
+Write-Host "Loader finished." -ForegroundColor Cyan
 Write-Host ""
 
 Read-Host "Press Enter to close"
