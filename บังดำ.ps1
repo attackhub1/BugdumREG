@@ -1,230 +1,226 @@
+# ============================================================
+# BANGDAM SHOP | SAFE REG LOADER
+# Windows PowerShell 5.1 Compatible
+# ============================================================
+
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$OutputEncoding = [System.Text.Encoding]::UTF8
+
 $Host.UI.RawUI.WindowTitle = "BangDam Shop | REG Loader"
 
 Clear-Host
 
-function Write-Line {
-    param([string]$Text)
+function Show-Status {
+    param(
+        [string]$Text,
+        [int]$Delay = 15
+    )
+
     Write-Host $Text -ForegroundColor White
-    Start-Sleep -Milliseconds 25
+    Start-Sleep -Milliseconds $Delay
 }
 
-# =========================================================
-# BANGDAM SHOP - 200 STATUS MESSAGES
-# =========================================================
+# ============================================================
+# 200 STATUS MESSAGES
+# ============================================================
 
 $messages = @(
-"[BangDam Shop] ยินดีต้อนรับเข้าสู่ระบบ",
-"[BangDam Shop] ระบบกำลังเตรียมการ",
-"[BangDam Shop] กำลังตรวจสอบสภาพแวดล้อม",
-"[BangDam Shop] กำลังเตรียม Registry",
-"[BangDam Shop] กำลังเตรียมไฟล์ชั่วคราว",
-"[BangDam Shop] ระบบกำลังตรวจสอบ Windows",
-"[BangDam Shop] กำลังตรวจสอบ Mouse Settings",
-"[BangDam Shop] กำลังตรวจสอบ Desktop Settings",
-"[BangDam Shop] กำลังเตรียมค่าที่ปลอดภัย",
-"[BangDam Shop] กำลังโหลด Configuration",
-"[BangDam Shop] BangDam Shop พร้อมทำงาน",
-"[BangDam Shop] เริ่มกระบวนการปรับแต่ง",
-"[BangDam Shop] ตรวจสอบ Registry เรียบร้อย",
-"[BangDam Shop] ตรวจสอบระบบเรียบร้อย",
-"[BangDam Shop] เตรียมใช้งานค่าระบบ",
-"[BangDam Shop] กำลังจัดการไฟล์ Config",
-"[BangDam Shop] กำลังเตรียม Emulator",
-"[BangDam Shop] กำลังเตรียม BlueStacks",
-"[BangDam Shop] กำลังเตรียม BlueStacks MSI",
-"[BangDam Shop] รอการเลือก Emulator",
-"[BangDam Shop] ระบบพร้อมรับคำสั่ง",
-"[BangDam Shop] โหลดระบบต่อเนื่อง",
-"[BangDam Shop] กำลังตรวจสอบค่าความไวเมาส์",
-"[BangDam Shop] กำลังตรวจสอบ MouseSpeed",
-"[BangDam Shop] กำลังตรวจสอบ MouseThreshold",
-"[BangDam Shop] กำลังตรวจสอบ MouseHover",
-"[BangDam Shop] กำลังตรวจสอบ MenuShowDelay",
-"[BangDam Shop] กำลังจัดเตรียมค่าพื้นฐาน",
-"[BangDam Shop] กำลังตรวจสอบ User Registry",
-"[BangDam Shop] กำลังตรวจสอบ Current User",
-"[BangDam Shop] กำลังเตรียมไฟล์ Import",
-"[BangDam Shop] กำลังสร้าง Temporary Config",
-"[BangDam Shop] Temporary Config พร้อมใช้งาน",
-"[BangDam Shop] เริ่มตรวจสอบ Registry Path",
-"[BangDam Shop] Registry Path ถูกต้อง",
-"[BangDam Shop] เตรียม Import Registry",
-"[BangDam Shop] ระบบ Import พร้อม",
-"[BangDam Shop] กำลังประมวลผลข้อมูล",
-"[BangDam Shop] กำลังอ่าน Configuration",
-"[BangDam Shop] อ่าน Configuration สำเร็จ",
-"[BangDam Shop] ตรวจสอบข้อมูลสำเร็จ",
-"[BangDam Shop] ไม่มีการลบ Registry เดิม",
-"[BangDam Shop] ระบบจะลบเฉพาะไฟล์ชั่วคราว",
-"[BangDam Shop] กำลังรักษาค่าระบบ",
-"[BangDam Shop] กำลังเตรียมขั้นตอนถัดไป",
-"[BangDam Shop] ระบบยังทำงานปกติ",
-"[BangDam Shop] กำลังตรวจสอบสิทธิ์",
-"[BangDam Shop] ตรวจสอบสิทธิ์เสร็จสิ้น",
-"[BangDam Shop] พร้อมใช้งาน",
-"[BangDam Shop] กำลังเข้าสู่ขั้นตอนหลัก",
-"[BangDam Shop] ระบบเริ่มทำงาน",
-"[BangDam Shop] โหลดค่า Windows",
-"[BangDam Shop] โหลดค่า Mouse",
-"[BangDam Shop] โหลดค่า Desktop",
-"[BangDam Shop] โหลดค่า Keyboard",
-"[BangDam Shop] ตรวจสอบค่าพื้นฐาน",
-"[BangDam Shop] ค่าพื้นฐานพร้อม",
-"[BangDam Shop] กำลังเตรียม Registry Import",
-"[BangDam Shop] Import Queue พร้อม",
-"[BangDam Shop] กำลังประมวลผล Queue",
-"[BangDam Shop] Queue ทำงานปกติ",
-"[BangDam Shop] ระบบกำลังเดินหน้า",
-"[BangDam Shop] ไม่พบปัญหาเบื้องต้น",
-"[BangDam Shop] ตรวจสอบ Environment สำเร็จ",
-"[BangDam Shop] ตรวจสอบ Temp Folder สำเร็จ",
-"[BangDam Shop] Temp Folder พร้อม",
-"[BangDam Shop] กำลังสร้างไฟล์",
-"[BangDam Shop] สร้างไฟล์สำเร็จ",
-"[BangDam Shop] ตรวจสอบไฟล์สำเร็จ",
-"[BangDam Shop] กำลังเตรียม Regedit",
-"[BangDam Shop] Regedit พร้อมทำงาน",
-"[BangDam Shop] กำลังส่งข้อมูล",
-"[BangDam Shop] กำลัง Import",
-"[BangDam Shop] Import Registry",
-"[BangDam Shop] กำลังตรวจสอบผลลัพธ์",
-"[BangDam Shop] Registry Process ทำงาน",
-"[BangDam Shop] Registry Process สำเร็จ",
-"[BangDam Shop] ตรวจสอบหลัง Import",
-"[BangDam Shop] Post Check เริ่มต้น",
-"[BangDam Shop] Post Check สำเร็จ",
-"[BangDam Shop] เตรียมลบ Temporary File",
-"[BangDam Shop] ตรวจสอบ Temporary File",
-"[BangDam Shop] พบ Temporary File",
-"[BangDam Shop] กำลังลบ Temporary File",
-"[BangDam Shop] ลบ Temporary File สำเร็จ",
-"[BangDam Shop] Registry ที่ Import ไว้ยังอยู่",
-"[BangDam Shop] ไม่มีการย้อนค่าที่ Import",
-"[BangDam Shop] ขั้นตอน Registry เสร็จสิ้น",
-"[BangDam Shop] กำลังเตรียม Emulator",
-"[BangDam Shop] ตรวจสอบ BlueStacks Path",
-"[BangDam Shop] ตรวจสอบ BlueStacks MSI Path",
-"[BangDam Shop] ตรวจสอบ HD-Player",
-"[BangDam Shop] ตรวจสอบ Emulator Executable",
-"[BangDam Shop] กำลังค้นหาไฟล์โปรแกรม",
-"[BangDam Shop] ตรวจสอบ Program Files",
-"[BangDam Shop] ตรวจสอบ Program Files x86",
-"[BangDam Shop] ตรวจสอบตำแหน่งติดตั้ง",
-"[BangDam Shop] ตรวจสอบ Path สำเร็จ",
-"[BangDam Shop] ระบบพร้อมเปิด Emulator",
-"[BangDam Shop] เตรียมเปิด BlueStacks",
-"[BangDam Shop] เตรียมเปิด BlueStacks MSI",
-"[BangDam Shop] ตรวจสอบตัวเลือกผู้ใช้",
-"[BangDam Shop] อ่านตัวเลือกสำเร็จ",
-"[BangDam Shop] กำลังตรวจสอบหมายเลข",
-"[BangDam Shop] หมายเลขถูกต้อง",
-"[BangDam Shop] กำลังเตรียม Launch",
-"[BangDam Shop] Launch Configuration พร้อม",
-"[BangDam Shop] กำลังเปิด Emulator",
-"[BangDam Shop] Emulator Launch เริ่มต้น",
-"[BangDam Shop] ส่งคำสั่ง Launch",
-"[BangDam Shop] คำสั่ง Launch สำเร็จ",
-"[BangDam Shop] กำลังตรวจสอบ Process",
-"[BangDam Shop] ตรวจสอบ Process",
-"[BangDam Shop] Process พร้อม",
-"[BangDam Shop] กำลังรอ Emulator",
-"[BangDam Shop] Emulator กำลังเริ่มทำงาน",
-"[BangDam Shop] ระบบหลักทำงานสำเร็จ",
-"[BangDam Shop] Registry ขั้นตอนเสร็จแล้ว",
-"[BangDam Shop] Temporary File ถูกลบแล้ว",
-"[BangDam Shop] ไม่มีไฟล์ชั่วคราวค้าง",
-"[BangDam Shop] Windows Config พร้อม",
-"[BangDam Shop] Mouse Config พร้อม",
-"[BangDam Shop] Desktop Config พร้อม",
-"[BangDam Shop] Emulator Config พร้อม",
-"[BangDam Shop] ตรวจสอบรอบสุดท้าย",
-"[BangDam Shop] Final Check",
-"[BangDam Shop] Final Check ผ่าน",
-"[BangDam Shop] ระบบพร้อมใช้งาน",
-"[BangDam Shop] กำลังส่งต่อให้ Emulator",
-"[BangDam Shop] เตรียมใช้งานจริง",
-"[BangDam Shop] ขั้นตอนทั้งหมดทำงานต่อเนื่อง",
-"[BangDam Shop] ไม่มีการลบ Registry",
-"[BangDam Shop] ลบเฉพาะ Temporary REG",
-"[BangDam Shop] ค่าที่ Import ยังคงอยู่",
-"[BangDam Shop] ระบบรักษาความปลอดภัยทำงาน",
-"[BangDam Shop] ตรวจสอบไฟล์อีกครั้ง",
-"[BangDam Shop] ไม่พบไฟล์ค้าง",
-"[BangDam Shop] ตรวจสอบเสร็จสมบูรณ์",
-"[BangDam Shop] พร้อมเปิดเกม",
-"[BangDam Shop] พร้อมเปิด Emulator",
-"[BangDam Shop] ระบบ BangDam Shop พร้อม",
-"[BangDam Shop] ขอบคุณที่ใช้งาน BangDam Shop",
-"[BangDam Shop] ระบบกำลังเข้าสู่ขั้นตอนสุดท้าย",
-"[BangDam Shop] Finalizing...",
-"[BangDam Shop] Preparing Emulator...",
-"[BangDam Shop] Preparing Windows...",
-"[BangDam Shop] Preparing Registry...",
-"[BangDam Shop] Preparing Mouse...",
-"[BangDam Shop] Preparing Desktop...",
-"[BangDam Shop] Checking Configuration...",
-"[BangDam Shop] Configuration OK",
-"[BangDam Shop] Registry OK",
-"[BangDam Shop] Mouse OK",
-"[BangDam Shop] Desktop OK",
-"[BangDam Shop] Temporary File OK",
-"[BangDam Shop] Emulator Path OK",
-"[BangDam Shop] Launch System OK",
-"[BangDam Shop] System Ready",
-"[BangDam Shop] Performance Config Ready",
-"[BangDam Shop] Windows Config Ready",
-"[BangDam Shop] User Config Ready",
-"[BangDam Shop] Import Completed",
-"[BangDam Shop] Cleanup Completed",
-"[BangDam Shop] Emulator Ready",
-"[BangDam Shop] Launching...",
-"[BangDam Shop] Almost Done...",
-"[BangDam Shop] Please Wait...",
-"[BangDam Shop] Processing...",
-"[BangDam Shop] Checking...",
-"[BangDam Shop] Loading...",
-"[BangDam Shop] Initializing...",
-"[BangDam Shop] Optimizing Safe Settings...",
-"[BangDam Shop] Applying Safe Configuration...",
-"[BangDam Shop] Configuration Applied",
-"[BangDam Shop] Cleanup Started",
-"[BangDam Shop] Cleanup Finished",
-"[BangDam Shop] Finalizing System",
-"[BangDam Shop] System Check Passed",
-"[BangDam Shop] Ready To Play",
-"[BangDam Shop] BangDam Shop Engine Ready",
-"[BangDam Shop] BangDam Shop Loader Ready",
-"[BangDam Shop] BangDam Shop Configuration Ready",
-"[BangDam Shop] BangDam Shop Final Check",
-"[BangDam Shop] Everything Is Ready",
-"[BangDam Shop] Launching Emulator Now",
-"[BangDam Shop] Thank You For Using BangDam Shop"
+"[BangDam Shop] Welcome to BangDam Shop",
+"[BangDam Shop] System starting",
+"[BangDam Shop] Initializing loader",
+"[BangDam Shop] Checking Windows",
+"[BangDam Shop] Checking environment",
+"[BangDam Shop] Checking temporary folder",
+"[BangDam Shop] Preparing configuration",
+"[BangDam Shop] Preparing registry",
+"[BangDam Shop] Preparing mouse settings",
+"[BangDam Shop] Preparing desktop settings",
+"[BangDam Shop] Preparing emulator",
+"[BangDam Shop] BangDam Engine starting",
+"[BangDam Shop] Configuration loading",
+"[BangDam Shop] Reading configuration",
+"[BangDam Shop] Configuration loaded",
+"[BangDam Shop] Checking registry path",
+"[BangDam Shop] Registry path ready",
+"[BangDam Shop] Preparing temporary REG",
+"[BangDam Shop] Temporary REG ready",
+"[BangDam Shop] Preparing RegEdit",
+"[BangDam Shop] RegEdit ready",
+"[BangDam Shop] Import system ready",
+"[BangDam Shop] Checking user profile",
+"[BangDam Shop] User profile OK",
+"[BangDam Shop] Checking Windows settings",
+"[BangDam Shop] Windows settings OK",
+"[BangDam Shop] Checking mouse settings",
+"[BangDam Shop] Mouse settings OK",
+"[BangDam Shop] Checking desktop settings",
+"[BangDam Shop] Desktop settings OK",
+"[BangDam Shop] Checking keyboard settings",
+"[BangDam Shop] Keyboard settings OK",
+"[BangDam Shop] Preparing safe configuration",
+"[BangDam Shop] Safe configuration ready",
+"[BangDam Shop] Starting registry process",
+"[BangDam Shop] Registry process running",
+"[BangDam Shop] Processing configuration",
+"[BangDam Shop] Processing registry",
+"[BangDam Shop] Processing mouse",
+"[BangDam Shop] Processing desktop",
+"[BangDam Shop] Processing keyboard",
+"[BangDam Shop] Registry queue ready",
+"[BangDam Shop] Registry queue processing",
+"[BangDam Shop] Registry queue complete",
+"[BangDam Shop] Checking temporary file",
+"[BangDam Shop] Temporary file found",
+"[BangDam Shop] Temporary file ready",
+"[BangDam Shop] Importing configuration",
+"[BangDam Shop] Import command sent",
+"[BangDam Shop] Waiting for RegEdit",
+"[BangDam Shop] RegEdit processing",
+"[BangDam Shop] RegEdit finished",
+"[BangDam Shop] Checking import result",
+"[BangDam Shop] Import result OK",
+"[BangDam Shop] Registry import complete",
+"[BangDam Shop] Registry values remain installed",
+"[BangDam Shop] No registry cleanup requested",
+"[BangDam Shop] Only temporary file will be removed",
+"[BangDam Shop] Preparing cleanup",
+"[BangDam Shop] Checking cleanup",
+"[BangDam Shop] Removing temporary REG",
+"[BangDam Shop] Temporary REG removed",
+"[BangDam Shop] Cleanup complete",
+"[BangDam Shop] Registry stage complete",
+"[BangDam Shop] Preparing emulator search",
+"[BangDam Shop] Searching BlueStacks",
+"[BangDam Shop] Searching BlueStacks MSI",
+"[BangDam Shop] Searching HD-Player",
+"[BangDam Shop] Checking Program Files",
+"[BangDam Shop] Checking Program Files x86",
+"[BangDam Shop] Checking emulator path",
+"[BangDam Shop] Emulator path scan started",
+"[BangDam Shop] Emulator path scan complete",
+"[BangDam Shop] Preparing user selection",
+"[BangDam Shop] Selection system ready",
+"[BangDam Shop] Waiting for emulator selection",
+"[BangDam Shop] Checking selected option",
+"[BangDam Shop] Selection validation",
+"[BangDam Shop] Selection validated",
+"[BangDam Shop] Preparing launch",
+"[BangDam Shop] Launch configuration ready",
+"[BangDam Shop] Preparing HD-Player",
+"[BangDam Shop] HD-Player check",
+"[BangDam Shop] HD-Player ready",
+"[BangDam Shop] Launch command ready",
+"[BangDam Shop] Sending launch command",
+"[BangDam Shop] Emulator launch started",
+"[BangDam Shop] Checking emulator process",
+"[BangDam Shop] Emulator process check",
+"[BangDam Shop] Emulator process ready",
+"[BangDam Shop] Waiting for emulator startup",
+"[BangDam Shop] Emulator startup running",
+"[BangDam Shop] System stage complete",
+"[BangDam Shop] Configuration stage complete",
+"[BangDam Shop] Cleanup stage complete",
+"[BangDam Shop] Launch stage ready",
+"[BangDam Shop] Final system check",
+"[BangDam Shop] Final registry check",
+"[BangDam Shop] Final emulator check",
+"[BangDam Shop] Final path check",
+"[BangDam Shop] Final configuration check",
+"[BangDam Shop] Final check complete",
+"[BangDam Shop] System ready",
+"[BangDam Shop] Registry ready",
+"[BangDam Shop] Mouse ready",
+"[BangDam Shop] Desktop ready",
+"[BangDam Shop] Emulator ready",
+"[BangDam Shop] Loader ready",
+"[BangDam Shop] BangDam Shop ready",
+"[BangDam Shop] Safe settings ready",
+"[BangDam Shop] Performance configuration ready",
+"[BangDam Shop] Windows configuration ready",
+"[BangDam Shop] User configuration ready",
+"[BangDam Shop] Temporary configuration removed",
+"[BangDam Shop] No temporary REG remains",
+"[BangDam Shop] Registry values are preserved",
+"[BangDam Shop] Cleanup successful",
+"[BangDam Shop] Import successful",
+"[BangDam Shop] System check successful",
+"[BangDam Shop] Emulator check successful",
+"[BangDam Shop] Path check successful",
+"[BangDam Shop] Launch system successful",
+"[BangDam Shop] Preparing final launch",
+"[BangDam Shop] Final launch preparation",
+"[BangDam Shop] Final launch check",
+"[BangDam Shop] Launching emulator soon",
+"[BangDam Shop] Please wait",
+"[BangDam Shop] Processing",
+"[BangDam Shop] Loading",
+"[BangDam Shop] Initializing",
+"[BangDam Shop] Checking",
+"[BangDam Shop] Preparing",
+"[BangDam Shop] Applying safe settings",
+"[BangDam Shop] Safe settings applied",
+"[BangDam Shop] Configuration applied",
+"[BangDam Shop] Registry applied",
+"[BangDam Shop] Mouse configuration applied",
+"[BangDam Shop] Desktop configuration applied",
+"[BangDam Shop] Keyboard configuration applied",
+"[BangDam Shop] Import completed",
+"[BangDam Shop] Cleanup completed",
+"[BangDam Shop] System finalized",
+"[BangDam Shop] Emulator finalized",
+"[BangDam Shop] Ready to play",
+"[BangDam Shop] Ready to launch",
+"[BangDam Shop] BangDam Loader online",
+"[BangDam Shop] BangDam Configuration online",
+"[BangDam Shop] BangDam Registry online",
+"[BangDam Shop] BangDam System online",
+"[BangDam Shop] Everything is ready",
+"[BangDam Shop] All checks passed",
+"[BangDam Shop] All preparation completed",
+"[BangDam Shop] Starting final process",
+"[BangDam Shop] Final process running",
+"[BangDam Shop] Final process complete",
+"[BangDam Shop] Launch process ready",
+"[BangDam Shop] Launch process started",
+"[BangDam Shop] Emulator is starting",
+"[BangDam Shop] Emulator should appear shortly",
+"[BangDam Shop] BangDam Shop Loader complete",
+"[BangDam Shop] Thank you for using BangDam Shop",
+"[BangDam Shop] Have a good game",
+"[BangDam Shop] System finished successfully",
+"[BangDam Shop] Process completed",
+"[BangDam Shop] DONE",
+"[BangDam Shop] READY",
+"[BangDam Shop] COMPLETE",
+"[BangDam Shop] EXITING LOADER"
 )
 
-# =========================================================
-# SHOW 200 MESSAGES
-# =========================================================
-
 foreach ($msg in $messages) {
-    Write-Line $msg
+    Show-Status $msg 12
 }
+
+# ============================================================
+# EMULATOR MENU
+# ============================================================
 
 Write-Host ""
 Write-Host "==================================================" -ForegroundColor DarkGray
-Write-Host "                 BANGDAM SHOP" -ForegroundColor White
+Write-Host "              BANGDAM SHOP" -ForegroundColor White
 Write-Host "==================================================" -ForegroundColor DarkGray
 Write-Host ""
 Write-Host "[1] BlueStacks" -ForegroundColor White
 Write-Host "[2] BlueStacks MSI" -ForegroundColor White
 Write-Host ""
 
-do {
-    $choice = Read-Host "พิมพ์ 1 หรือ 2 แล้วกด Enter"
-} while ($choice -ne "1" -and $choice -ne "2")
+$choice = ""
 
-# =========================================================
-# SAFE REGISTRY SETTINGS
-# =========================================================
+while ($choice -ne "1" -and $choice -ne "2") {
+    $choice = Read-Host "Enter 1 or 2"
+}
+
+# ============================================================
+# SAFE REGISTRY
+# ============================================================
 
 $regContent = @'
 Windows Registry Editor Version 5.00
@@ -257,62 +253,69 @@ Windows Registry Editor Version 5.00
 "Last Valid Wait"=dword:000003e8
 '@
 
-# =========================================================
+# ============================================================
 # CREATE TEMP REG
-# =========================================================
+# ============================================================
 
 $tempReg = Join-Path $env:TEMP "BangDamShop_Config.reg"
 
 Write-Host ""
-Write-Host "[REG] กำลังสร้างไฟล์ชั่วคราว..." -ForegroundColor White
+Write-Host "[REG] Creating temporary configuration..." -ForegroundColor White
 
-Set-Content -Path $tempReg -Value $regContent -Encoding Unicode
+# UTF-16 LE is reliably readable by regedit
+[System.IO.File]::WriteAllText(
+    $tempReg,
+    $regContent,
+    [System.Text.Encoding]::Unicode
+)
 
-if (Test-Path $tempReg) {
-    Write-Host "[OK] สร้างไฟล์ REG สำเร็จ" -ForegroundColor White
-} else {
-    Write-Host "[ERROR] สร้างไฟล์ REG ไม่สำเร็จ" -ForegroundColor Red
-    Read-Host "กด Enter เพื่อออก"
+if (-not (Test-Path $tempReg)) {
+    Write-Host "[ERROR] Could not create REG file" -ForegroundColor Red
+    Read-Host "Press Enter to exit"
     exit
 }
 
-# =========================================================
-# IMPORT REG
-# =========================================================
+Write-Host "[OK] Temporary REG created" -ForegroundColor White
 
-Write-Host "[REG] กำลัง Import Registry..." -ForegroundColor White
+# ============================================================
+# IMPORT REG
+# ============================================================
+
+Write-Host "[REG] Importing configuration..." -ForegroundColor White
 
 $regProcess = Start-Process `
-    -FilePath "regedit.exe" `
+    -FilePath "$env:WINDIR\regedit.exe" `
     -ArgumentList "/s `"$tempReg`"" `
     -Wait `
     -PassThru
 
 if ($regProcess.ExitCode -eq 0) {
-    Write-Host "[OK] Import Registry สำเร็จ" -ForegroundColor White
-} else {
-    Write-Host "[WARNING] Regedit ส่ง ExitCode $($regProcess.ExitCode)" -ForegroundColor Yellow
+    Write-Host "[OK] Registry import completed" -ForegroundColor White
+}
+else {
+    Write-Host "[WARNING] RegEdit returned code $($regProcess.ExitCode)" -ForegroundColor Yellow
 }
 
-# =========================================================
+# ============================================================
 # DELETE ONLY TEMP REG
-# =========================================================
+# ============================================================
 
 Start-Sleep -Milliseconds 300
 
 if (Test-Path $tempReg) {
-    Remove-Item $tempReg -Force -ErrorAction SilentlyContinue
+    Remove-Item -LiteralPath $tempReg -Force -ErrorAction SilentlyContinue
 }
 
 if (-not (Test-Path $tempReg)) {
-    Write-Host "[OK] ลบเฉพาะไฟล์ชั่วคราวเรียบร้อย" -ForegroundColor White
-} else {
-    Write-Host "[WARNING] ไม่สามารถลบไฟล์ชั่วคราวได้" -ForegroundColor Yellow
+    Write-Host "[OK] Temporary REG deleted" -ForegroundColor White
+}
+else {
+    Write-Host "[WARNING] Temporary REG could not be deleted" -ForegroundColor Yellow
 }
 
-# =========================================================
-# FIND BLUESTACKS
-# =========================================================
+# ============================================================
+# BLUESTACKS PATHS
+# ============================================================
 
 $blueStacksPaths = @(
     "$env:ProgramFiles\BlueStacks_nxt\HD-Player.exe",
@@ -328,57 +331,62 @@ $msiPaths = @(
     "$env:ProgramFiles(x86)\BlueStacks_msi5\HD-Player.exe"
 )
 
+# ============================================================
+# FIND SELECTED EMULATOR
+# ============================================================
+
 if ($choice -eq "1") {
 
     Write-Host ""
-    Write-Host "[1] เลือก BlueStacks" -ForegroundColor White
-    Write-Host "[SCAN] กำลังค้นหา HD-Player.exe..." -ForegroundColor White
+    Write-Host "[1] BlueStacks selected" -ForegroundColor White
+    Write-Host "[SCAN] Searching for HD-Player.exe..." -ForegroundColor White
 
     $player = $blueStacksPaths |
-        Where-Object { Test-Path $_ } |
+        Where-Object { Test-Path -LiteralPath $_ } |
         Select-Object -First 1
-
-} else {
+}
+else {
 
     Write-Host ""
-    Write-Host "[2] เลือก BlueStacks MSI" -ForegroundColor White
-    Write-Host "[SCAN] กำลังค้นหา HD-Player.exe..." -ForegroundColor White
+    Write-Host "[2] BlueStacks MSI selected" -ForegroundColor White
+    Write-Host "[SCAN] Searching for HD-Player.exe..." -ForegroundColor White
 
     $player = $msiPaths |
-        Where-Object { Test-Path $_ } |
+        Where-Object { Test-Path -LiteralPath $_ } |
         Select-Object -First 1
 }
 
-# =========================================================
+# ============================================================
 # LAUNCH
-# =========================================================
+# ============================================================
+
+Write-Host ""
 
 if ($player) {
 
-    Write-Host ""
     Write-Host "==================================================" -ForegroundColor DarkGray
-    Write-Host "[OK] พบ Emulator แล้ว" -ForegroundColor White
+    Write-Host "[OK] Emulator found" -ForegroundColor White
     Write-Host "[PATH] $player" -ForegroundColor Gray
-    Write-Host "[LAUNCH] กำลังเปิด..." -ForegroundColor White
+    Write-Host "[LAUNCH] Starting emulator..." -ForegroundColor White
     Write-Host "==================================================" -ForegroundColor DarkGray
     Write-Host ""
 
     Start-Process -FilePath $player
 
-    Write-Host "[DONE] เปิด Emulator สำเร็จ" -ForegroundColor White
-    Write-Host "[DONE] BangDam Shop ทำงานเสร็จแล้ว" -ForegroundColor White
+    Write-Host "[DONE] Emulator launched" -ForegroundColor White
+    Write-Host "[DONE] BangDam Shop finished" -ForegroundColor White
 
-} else {
+}
+else {
 
-    Write-Host ""
     Write-Host "==================================================" -ForegroundColor DarkGray
-    Write-Host "[ERROR] ไม่พบ BlueStacks ตาม Path ที่กำหนด" -ForegroundColor Red
-    Write-Host "[INFO] ลองตรวจสอบตำแหน่งติดตั้ง BlueStacks" -ForegroundColor Yellow
+    Write-Host "[ERROR] Emulator not found" -ForegroundColor Red
+    Write-Host "[INFO] Check your BlueStacks installation path" -ForegroundColor Yellow
     Write-Host "==================================================" -ForegroundColor DarkGray
 }
 
 Write-Host ""
-Write-Host "ร้านบังดำ Shop | ขอบคุณที่ใช้งาน ❤️" -ForegroundColor White
+Write-Host "BangDam Shop | Loader finished" -ForegroundColor White
 Write-Host ""
 
-Read-Host "กด Enter เพื่อปิด"
+Read-Host "Press Enter to close"
